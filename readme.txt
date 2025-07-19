@@ -1,3 +1,50 @@
+
+*********** Folder Structure *************
+eks-prod-cluster/
+│
+├── k8s/
+│   ├── base/
+│   │   ├── backend/
+│   │   │   ├── statefulset.yaml
+│   │   │   ├── service.yaml
+│   │   │   ├── pvc.yaml #Optional
+│   │   │   ├── hpa.yaml
+│   │   │   └── configmap.yaml   # optional
+│   │   ├── frontend/
+│   │   │   ├── deployment.yaml
+│   │   │   ├── service.yaml
+│   │   │   ├── hpa.yaml
+│   │   │   └── configmap.yaml   # optional
+│   │   ├── ingress/
+│   │   │   ├── ingress.yaml
+│   │   │   └── tls-secret.yaml
+│   │   ├── storage/
+│   │   │   └── storageclass.yaml
+│   │   ├── secrets/
+│   │   │   ├── dockerhub-secret.yaml
+│   │   │   └── tls-secret.yaml
+│   │   └── namespaces/
+│   │       └── app-namespace.yaml
+│
+├── charts/                   # Optional: Helm charts if you prefer templating
+│   ├── frontend-chart/
+│   └── backend-chart/
+│
+├── scripts/                  # Utility scripts
+│   ├── deploy.sh
+│   └── cleanup.sh
+│
+├── infra/                    # Infra as code (optional)
+│   ├── eksctl/
+│   │   └── eks-cluster.yaml
+│   ├── terraform/            # Or use Terraform instead
+│   │   ├── main.tf
+│   │   └── route53.tf
+│
+└── README.md
+
+
+
 # two_tier_app_k8
 
 Deploy Web-clicker flask app from end-to end
