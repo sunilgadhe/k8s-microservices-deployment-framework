@@ -47,6 +47,53 @@ eks-prod-cluster/
 
 # two_tier_app_k8
 
+
+
+*********************************************************
+Create EKS cluster Manually
+*********************************************************
+1. Creaet a config file (cluster-config.yaml)
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: my-eks-cluster
+  region: us-east-1
+
+# Define the first node group
+nodeGroups:
+  - name: ng-frontend
+    instanceType: t3.small
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
+    volumeSize: 20
+    labels:
+      nodegroup: frontend
+    #ssh:
+     # allow: true
+      #publicKeyName: my-keypair-name # Replace with your EC2 key pair name
+
+  # Define the second node group
+  - name: ng-backend
+    instanceType: t3.small
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 2
+    volumeSize: 20
+    labels:
+      nodegroup: backend
+
+2: Create the cluster
+eksctl create cluster -f cluster-config.yaml
+
+*********************************************************
+*********************************************************
+
+
+
+
 Deploy Web-clicker flask app from end-to end
 
   - create yaml files
