@@ -44,56 +44,25 @@ eks-prod-cluster/
 └── README.md
 
 
-
+*****************************
 # two_tier_app_k8
+****************************
 
 
 
 *********************************************************
-Create EKS cluster Manually
 *********************************************************
-1. Creaet a config file (cluster-config.yaml)
+1. Create cluster config file
+2. Create eks cluster
+1. Install add-on packages (Ingress Controller, EBS CSI Driver #Optional: Only if your app uses PersistentVolumeClaims with storageClassName: gp2, gp3)
+1. Create k8 secrets to pull image & ssl/tls secret for ssl termination
+3. Create manufest as per requirement
+4. Deploy resources using manifest
+   kubectl apply -f manifests/namespaces -R	# First create namepaces
+   kubectl apply -f manifests -R	# Deploy other resources 
 
-apiVersion: eksctl.io/v1alpha5
-kind: ClusterConfig
-
-metadata:
-  name: my-eks-cluster
-  region: us-east-1
-
-# Define the first node group
-nodeGroups:
-  - name: ng-frontend
-    instanceType: t3.small
-    desiredCapacity: 1
-    minSize: 1
-    maxSize: 3
-    volumeSize: 20
-    labels:
-      nodegroup: frontend
-    #ssh:
-     # allow: true
-      #publicKeyName: my-keypair-name # Replace with your EC2 key pair name
-
-  # Define the second node group
-  - name: ng-backend
-    instanceType: t3.small
-    desiredCapacity: 1
-    minSize: 1
-    maxSize: 2
-    volumeSize: 20
-    labels:
-      nodegroup: backend
-
-2: Create the cluster
-eksctl create cluster -f cluster-config.yaml
 
 *********************************************************
-*********************************************************
-
-
-
-
 Deploy Web-clicker flask app from end-to end
 
   - create yaml files
@@ -111,7 +80,7 @@ Deploy Web-clicker flask app from end-to end
                   --nodes-max 3 \
                   --managed
   - Create k8 secrets to pull private images & configure ssl/tls certificate
-    docker ser: dckr_pat_FVUePS6BYyhTIgBkjpNspHOljtw (use docker token instead password)
+
     
   - Create ssl/tls secrets
 

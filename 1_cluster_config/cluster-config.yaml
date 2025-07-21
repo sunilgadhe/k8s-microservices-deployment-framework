@@ -5,8 +5,7 @@ metadata:
   name: my-eks-cluster
   region: us-east-1
 
-# Define the first node group
-nodeGroups:
+managedNodeGroups:
   - name: ng-frontend
     instanceType: t3.small
     desiredCapacity: 1
@@ -15,11 +14,10 @@ nodeGroups:
     volumeSize: 20
     labels:
       nodegroup: frontend
-    #ssh:
-     # allow: true
-      #publicKeyName: my-keypair-name # Replace with your EC2 key pair name
+    ssh:
+      allow: true
+      publicKeyName: new_kp # Replace with your EC2 key pair name
 
-  # Define the second node group
   - name: ng-backend
     instanceType: t3.small
     desiredCapacity: 1
@@ -28,3 +26,4 @@ nodeGroups:
     volumeSize: 20
     labels:
       nodegroup: backend
+
