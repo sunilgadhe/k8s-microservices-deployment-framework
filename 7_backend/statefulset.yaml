@@ -27,6 +27,14 @@ spec:
         volumeMounts:
         - name: ebs-sc
           mountPath: /data
+        resources:
+         requests:
+          memory: "200Mi"
+          cpu: "250m"
+         limits:
+          memory: "1Gi"
+          cpu: "500m"
+
   volumeClaimTemplates:
   - metadata:
       name: ebs-sc

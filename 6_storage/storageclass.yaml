@@ -15,4 +15,4 @@ allowedTopologies:
 - matchLabelExpressions:
   - key: topology.ebs.csi.aws.com/zone
     values:
-    - us-east-1b #node must be in the same AZ
+    - us-east-1c #node must be in the same AZ

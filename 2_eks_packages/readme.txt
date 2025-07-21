@@ -1,3 +1,34 @@
+****************************************************************
+                        Install AWS EBS Driver
+****************************************************************
+
+
+1. Install Helm
+   helm repo add eks https://aws.github.io/eks-charts
+
+2. Update Helm 
+   helm repo update 
+
+3. Install EBS CSI Driver
+   helm upgrade --install aws-ebs-csi-driver \
+      --namespace kube-system \
+      aws-ebs-csi-driver/aws-ebs-csi-driver
+
+4. Create a StorageClass for EBS (if not already defined) #optional
+5. Deploy Your Workloads (StatefulSet, PVCs, etc.)  #optional
+
+
+#############Troubleshooting################
+1. If pvc is not getting created properly
+
+  To get CSI pods
+  kubectl get pods -n kube-system -l app.kubernetes.io/name=aws-ebs-csi-driver
+
+  To get CSI container logs
+  kubectl logs -n kube-system <container_name>
+
+
+
 
 ****************************************************************
 		 Install Ingress Controller
@@ -6,84 +37,43 @@
 1. Configure IAM OIDC provider
    eksctl utils associate-iam-oidc-provider --cluster <cluster_name> --approve
 
-2. Setup ALB add on
-   Create IAM policy for ALB with name "AWSLoadBalancerControllerIAMPolicy":
-   aws iam create-policy \
+2. Setup alb add on
+   Download IAM policy
+   curl -O <github_polict_url> 
+
+  Create IAM Policy
+  aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
-    --policy-document file://alb_iam_policy.json
-   
-3. Create IAM Role
+    --policy-document file://iam_policy.json
+
+  Create IAM Role
   eksctl create iamserviceaccount \
-    --name ebs-csi-controller-sa \
-    --namespace kube-system \
-    --cluster my-eks-cluster \
-    --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
-    --approve \
-    --role-only \
-    --role-name AmazonEKS_EBS_CSI_Driver_Role \
-    --region us-east-1
+      --cluster=eks-cluster \
+      --namespace=kube-system \
+      --name=aws-load-balancer-controller \
+      --role-name=AmazonEKSLoadBalancerControllerRole \
+      --attach-policy-arn=arn:aws:iam::910322382104:policy/AWSLoadBalancerControllerIAMPolicy \
+      --approve
 
+3. Deploy ALB controller
 
-
-
-
-
-
-4. Deploy ALB controller
-   Add helm repo:
+   Add helm repo
    helm repo add eks https://aws.github.io/eks-charts
 
-   Update the repo:
+   Update the repo
    helm repo update eks
 
-   helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
-   --namespace kube-system \
-   --set clusterName=<cluster_name> \
-   --set serviceAccount.create=false \
-   --set serviceAccount.name=aws-load-balancer-controller \
-   --set region=<region_id> \
-   --set vpcId=<cluster_vpc_id>
+   Install
+   helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system \
+     --set clusterName=<your-cluster-name> \
+     --set serviceAccount.create=false \
+     --set serviceAccount.name=aws-load-balancer-controller \
+     --set region=<your-region> \
+     --set vpcId=<your-vpc-id>
 
-5. Validate is "aws-load-balancer-controller" pods are running 
-   kubectl get pods -n kube-system
-
-   
-****************************************************************
-			Install AWS EBS Driver
-****************************************************************
-1. Enable OIDC provide on EKS cluster
-   eksctl utils associate-iam-oidc-provider --cluster <cluster_name> --approve
-
-2. Create IAM Role and Kubernetes Service Account (IRSA) using eksctl
-   This single command:
-   - Creates the IAM Role with the correct trust relationship
-   - Attaches the AWS-managed AmazonEBSCSIDriverPolicy
-   - Creates and annotates the Kubernetes Service Account (ebs-csi-controller-sa)
- 
-   eksctl create iamserviceaccount \
-     --name ebs-csi-controller-sa \
-     --namespace kube-system \
-     --cluster <your-cluster-name> \
-     --attach-policy-arn arn:aws:iam::aws:policy/AmazonEBSCSIDriverPolicy \
-     --approve \
-     --role-name AmazonEKS_EBS_CSI_DriverRole
-
-3. Add the AWS EBS CSI Helm Chart Repo
-   helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
-   helm repo update
-
-4. Install the EBS CSI Driver via Helm
-
-   helm upgrade --install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
-     --namespace kube-system \
-     --set controller.serviceAccount.create=false \
-     --set controller.serviceAccount.name=ebs-csi-controller-sa
-
-5. Verify EBS CSI Driver Installation
-   You should see the EBS CSI Controller pods running.
-   
-   kubectl get pods -n kube-system -l "app.kubernetes.io/name=aws-ebs-csi-driver"
+   Verify that the deployments are running.
+   kubectl get deployment -n kube-system aws-load-balancer-controller
 
 
-6. Create a StorageClass for EBS (if not already defined) #optional
-7. Deploy Your Workloads (StatefulSet, PVCs, etc.)  #optional
+
+
