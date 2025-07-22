@@ -3,8 +3,11 @@ kind: Service
 metadata:
   name: frontend-service      # Name of service
   namespace: frontend-ns 
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "false"
 spec:   #To define the desired condifuration for the service
-  type: ClusterIP      # Type of service, use LoadBalancer or NodePort as pe req.
+  type: LoadBalancer      # Type of service, use LoadBalancer or NodePort as pe req.
   selector:     #The selector tells the Service which Pods to route traffic to, based on labels.
     app: frontend
   ports:        #defines how traffic is forwarded:

@@ -2,12 +2,12 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: my-eks-cluster
+  name: my-eks
   region: us-east-1
 
 managedNodeGroups:
   - name: ng-frontend
-    instanceType: t3.small
+    instanceType: t3.medium
     desiredCapacity: 1
     minSize: 1
     maxSize: 3
@@ -19,7 +19,7 @@ managedNodeGroups:
       publicKeyName: new_kp # Replace with your EC2 key pair name
 
   - name: ng-backend
-    instanceType: t3.small
+    instanceType: t3.medium
     desiredCapacity: 1
     minSize: 1
     maxSize: 2

@@ -1,21 +1,34 @@
+
+
+
 ****************************************************************
                         Install AWS EBS Driver
 ****************************************************************
 
+1. What is AWS EBS CSI Driver
+   EKS EBS CSI Driver is a Container Storage Interface (CSI) driver for Amazon Elastic Kubernetes Service (EKS) that allows Kubernetes clusters to use Amazon Elastic Block Store (EBS) volumes for persistent storage.
 
-1. Install Helm
-   helm repo add eks https://aws.github.io/eks-charts
+2. Configure IAM OIDC provider
+   eksctl utils associate-iam-oidc-provider --cluster <cluster_name> --approve
 
-2. Update Helm 
-   helm repo update 
+3. reating IAM role with the necessary permissions for the EBS CSI Driver and sets up a trust relationship between this IAM role and the Kubernetes service account.
 
-3. Install EBS CSI Driver
-   helm upgrade --install aws-ebs-csi-driver \
-      --namespace kube-system \
-      aws-ebs-csi-driver/aws-ebs-csi-driver
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster eks-ebs-csi-cluster \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_Driver_Role \
+  --region us-east-1
 
-4. Create a StorageClass for EBS (if not already defined) #optional
-5. Deploy Your Workloads (StatefulSet, PVCs, etc.)  #optional
+
+4. Install the AWS EBS CSI Driver Addon
+eksctl create addon --name aws-ebs-csi-driver --cluster eks-ebs-csi-cluster --service-account-role-arn arn:aws:iam::<account_id>:role/AmazonEKS_EBS_CSI_Driver_Role --region us-east-1 --force
+
+5. Create a StorageClass for EBS (if not already defined) #optional
+6. Deploy Your Workloads (StatefulSet, PVCs, etc.)  #optional
 
 
 #############Troubleshooting################
