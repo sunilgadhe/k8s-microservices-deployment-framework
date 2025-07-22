@@ -41,10 +41,26 @@ eksctl create addon --name aws-ebs-csi-driver --cluster eks-ebs-csi-cluster --se
   kubectl logs -n kube-system <container_name>
 
 
+****************************************************************
+    Install Ingress Controller / Only for third party SSL 
+****************************************************************
+1. Install NGINX Ingress Controller in EKS
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm repo update
+
+
+helm install nginx-ingress ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx --create-namespace \
+  --set controller.service.type=LoadBalancer
+
+2. Deploy Flask App + ClusterIP Service #Optional
+
+3. Create Ingress Resource #Optional
 
 
 ****************************************************************
-		 Install Ingress Controller
+    Install Ingress Controller / Only for AWS ACM SSL
 ****************************************************************
 
 1. Configure IAM OIDC provider

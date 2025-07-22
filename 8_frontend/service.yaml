@@ -7,9 +7,9 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     service.beta.kubernetes.io/aws-load-balancer-internal: "false"
 spec:   #To define the desired condifuration for the service
-  type: LoadBalancer      # Type of service, use LoadBalancer or NodePort as pe req.
+  type: ClusterIP      # Type of service, use LoadBalancer or NodePort as pe req.
   selector:     #The selector tells the Service which Pods to route traffic to, based on labels.
     app: frontend
   ports:        #defines how traffic is forwarded:
-    - port: 80  #The Service port, used internally in the cluster.
+    - port: 5000  #The Service port, used internally in the cluster.
       targetPort: 5000    #The container port on the selected Pods to which traffic should be directed.
