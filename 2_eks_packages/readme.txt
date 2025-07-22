@@ -45,18 +45,30 @@ eksctl create addon --name aws-ebs-csi-driver --cluster eks-ebs-csi-cluster --se
     Install Ingress Controller / Only for third party SSL 
 ****************************************************************
 1. Install NGINX Ingress Controller in EKS
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
-helm repo update
+   helm repo update
 
-
-helm install nginx-ingress ingress-nginx/ingress-nginx \
-  --namespace ingress-nginx --create-namespace \
-  --set controller.service.type=LoadBalancer
+   helm install nginx-ingress ingress-nginx/ingress-nginx \
+     --namespace ingress-nginx --create-namespace \
+     --set controller.service.type=LoadBalancer
 
 2. Deploy Flask App + ClusterIP Service #Optional
 
 3. Create Ingress Resource #Optional
+
+
+# Troubleshooting
+If NLB is geting deployed in the private subnet then update inngress controlelr manually
+1. To get svc's
+   kubectl get svc --all-namespaces 
+
+2. To edit ingress controller svc
+   kubectl edit svc nginx-ingress-ingress-nginx-controller -n ingress-nginx
+
+3. Add below annotation
+   service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+
 
 
 ****************************************************************

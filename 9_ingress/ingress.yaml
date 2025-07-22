@@ -5,6 +5,7 @@ metadata:
   namespace: frontend-ns
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"  # Redirect HTTP to HTTPS
 spec:
   ingressClassName: nginx   # Correctly placed here at the root level
   rules:
@@ -18,4 +19,7 @@ spec:
                 name: frontend-service
                 port:
                   number: 5000
-
+  tls:
+    - hosts:
+        - flask.sunilcloud.online
+      secretName: my-tls-secret	#Reference to the Secret you created
