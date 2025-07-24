@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-redis
+  namespace: backend-ns
+spec:
+  selector:
+    matchLabels:
+      app: backend # has to match .spec.template.metadata.labels
+  serviceName: "redis"
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: backend # has to match .spec.selector.matchLabels
+    spec:
+      nodeSelector:
+        nodegroup: backend
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: redis
+        image: redis:7.4.5-alpine3.21
+        ports:
+        - containerPort: 6379
+          name: web
+        volumeMounts:
+        - name: ebs-sc
+          mountPath: /data
+        resources:
+         requests:
+          memory: "200Mi"
+          cpu: "250m"
+         limits:
+          memory: "1Gi"
+          cpu: "500m"
+
+  volumeClaimTemplates:
+  - metadata:
+      name: ebs-sc
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 3Gi

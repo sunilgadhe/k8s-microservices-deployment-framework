@@ -1,0 +1,15 @@
+apiVersion: v1 #define API version of the kubernetes object
+kind: Namespace # Specify type of object to create
+metadata:       # This contains info about object, such as name & labels
+  name: frontend-ns      # Name od namespace
+  labels:       # key-value pair to organize & slecting resources
+    name: frontend-ns
+
+---
+apiVersion: v1 #define API version of the kubernetes object
+kind: Namespace # Specify type of object to create
+metadata:       # This contains info about object, such as name & labels
+  name: backend-ns      # Name od namespace
+  labels:       # key-value pair to organize & slecting resources
+    name: backend-ns
+

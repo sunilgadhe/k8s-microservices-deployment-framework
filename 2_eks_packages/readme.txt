@@ -53,9 +53,16 @@ eksctl create addon --name aws-ebs-csi-driver --cluster eks-ebs-csi-cluster --se
      --namespace ingress-nginx --create-namespace \
      --set controller.service.type=LoadBalancer
 
-2. Deploy Flask App + ClusterIP Service #Optional
+2. Install Internet facing LB
+helm install nginx-ingress ingress-nginx/ingress-nginx \                             
+  --namespace ingress-nginx --create-namespace \
+  --set controller.service.type=LoadBalancer \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-internal"="false" \
+  --set controller.service.externalTrafficPolicy=Cluster
 
-3. Create Ingress Resource #Optional
+3. Deploy Flask App + ClusterIP Service #Optional
+
+4. Create Ingress Resource #Optional
 
 
 # Troubleshooting
