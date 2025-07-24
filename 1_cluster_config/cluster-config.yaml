@@ -8,8 +8,8 @@ metadata:
 managedNodeGroups:
   - name: ng-frontend
     instanceType: t3.medium
-    desiredCapacity: 1
-    minSize: 1
+    desiredCapacity: 0
+    minSize: 0
     maxSize: 3
     volumeSize: 20
     labels:
@@ -20,8 +20,8 @@ managedNodeGroups:
 
   - name: ng-backend
     instanceType: t3.medium
-    desiredCapacity: 1
-    minSize: 1
+    desiredCapacity: 0
+    minSize: 0
     maxSize: 2
     volumeSize: 20
     labels:
