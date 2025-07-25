@@ -1,3 +1,32 @@
+This project showcases a scalable microservices architecture deployed on Kubernetes, with a comprehensive deployment framework featuring end-to-end monitoring, SSL encryption, and Helm charts for efficient deployment management.
+
+Key features include:
+
+Microservices Architecture: A 3-tier application with separate frontend, backend, and database services, each deployed as individual microservices for modularity and scalability.
+
+End-to-End Monitoring: Integrated monitoring using Prometheus and Grafana, enabling real-time observability, metrics collection, and alerting for infrastructure and application performance.
+
+SSL Encryption: Ensures secure, encrypted communication between microservices and external users, maintaining data privacy and integrity.
+
+Helm Charts: Simplified Kubernetes deployment using Helm charts, allowing for easy application management, upgrades, and rollback across environments.
+
+This framework provides an end-to-end solution for deploying, securing, and monitoring microservices on Kubernetes, emphasizing automation, observability, and security.
+
+Technologies Used: Kubernetes
+
+Helm
+
+Prometheus & Grafana (for monitoring)
+
+SSL/TLS (for encryption)
+
+CI/CD pipeline for continuous testing and deployment
+
+The goal of this project is to offer a reusable and robust framework that can be easily adapted for deploying production-grade microservices applications in Kubernetes environments, with built-in security and monitoring features.
+
+
+
+
 
 *********** Folder Structure *************
 eks-prod-cluster/
