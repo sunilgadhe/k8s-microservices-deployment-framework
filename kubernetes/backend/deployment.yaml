@@ -1,0 +1,41 @@
+apiVersion: apps/v1     #Specifies the API version for the Deployment resource.
+kind: Deployment        # Declare type object to create
+metadata:
+  name: backend-deployment        # name of the deployment
+  namespace: backend-ns # Specifies the namespace where this Deployment will be created.
+  labels:
+    app: backend  # Labels are key-value pairs attached to the Deployment. Here, the label app: nginx can be used to select or identify resources related to this app.
+spec:
+  replicas: 1 #Specifies the desired number of Pod replicas. Kubernetes will try to maintain 3 running Pods matching the template.
+  selector: #This selector tells the Deployment which Pods it manages -- it manages Pods with label app: nginx
+    matchLabels:
+      app: backend
+  template:
+    metadata: #Defines the metadata for Pods created by this Deployment.These Pods will be labeled app: nginx.
+      labels:
+        app: backend
+    spec:
+      nodeSelector: #The nodeSelector forces Pods to be scheduled only on nodes with the label nodegroup=frontend. Useful for grouping Pods on specific hardware or zones.
+        nodegroup: backend
+      imagePullSecrets:
+       - name: regcred
+      containers:
+        - name: backend #Defines the container inside the Pod.
+          image: sunilgadhe/my-apps:flask-k8-v2 #Specifies the container image to use
+          ports:
+            - containerPort: 5000 #Exposes port 80 inside the container. This tells Kubernetes which port the container listens on.
+          envFrom:
+            - configMapRef:
+                name: flask-app-config
+          resources:
+            requests:
+              cpu: "100m" #requests define the minimum CPU guaranteed (100 milliCPU).
+            limits: #limits define the maximum CPU the container can use (300 milliCPU).
+              cpu: "300m"
+#          livenessProbe: #Liveness probe: Kubernetes will send HTTP GET requests to / on port 80.
+ #           httpGet:
+  #            path: /
+   #           port: 8085
+    #        initialDelaySeconds: 5 #Starts probing 5 seconds after the container starts
+     #       periodSeconds: 10 #Probes every 10 seconds
+      #    readinessProbe: #Defines a readiness probe for the container -- this tells Kubernetes how to check if 

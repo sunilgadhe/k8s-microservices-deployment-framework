@@ -13,3 +13,10 @@ metadata:       # This contains info about object, such as name & labels
   labels:       # key-value pair to organize & slecting resources
     name: backend-ns
 
+---
+apiVersion: v1 #define API version of the kubernetes object
+kind: Namespace # Specify type of object to create
+metadata:       # This contains info about object, such as name & labels
+  name: database-ns      # Name od namespace
+  labels:       # key-value pair to organize & slecting resources
+    name: database-ns
