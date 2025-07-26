@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Click Counter</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 60px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      text-align: center;
+      max-width: 350px;
+      width: 90%;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+
+    button {
+      background: #fff;
+      color: #764ba2;
+      font-size: 1.5rem;
+      font-weight: 700;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Click Count: <span id="click-count">0</span></h1>
+    <button id="click-btn">Click Me!</button>
+  </div>
+
+  <!-- ✅ Load environment configuration -->
+  <script src="env.js"></script>
+
+  <!-- ✅ App logic using env variable -->
+  <script>
+    const apiUrl = window._env_?.API_URL || 'http://localhost:8085/api/clicks';
+
+    async function fetchClicks() {
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        document.getElementById('click-count').innerText = data.clicks;
+      } catch (error) {
+        console.error('Error fetching clicks:', error);
+      }
+    }
+
+    async function incrementClicks() {
+      try {
+        const response = await fetch(apiUrl, { method: 'POST' });
+        const data = await response.json();
+        document.getElementById('click-count').innerText = data.clicks;
+      } catch (error) {
+        console.error('Error incrementing clicks:', error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchClicks();
+      document.getElementById('click-btn').addEventListener('click', incrementClicks);
+    });
+  </script>
+</body>
+</html>
+

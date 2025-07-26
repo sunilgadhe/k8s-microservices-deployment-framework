@@ -1,0 +1,16 @@
+<script>
+    async function countClick() {
+        const response = await fetch('http://backend:5000/click', {
+            method: 'POST'
+        });
+        const data = await response.json();
+        document.getElementById('count').innerText = data.count;
+    }
+
+    window.onload = async function() {
+        const response = await fetch('http://backend:5000/count');
+        const data = await response.json();
+        document.getElementById('count').innerText = data.count;
+    }
+</script>
+
