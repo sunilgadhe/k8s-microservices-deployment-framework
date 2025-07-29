@@ -4,9 +4,9 @@
 
 ### Same Namespace
 
-Redis hostname redis assumes you're running Redis in the same Kubernetes namespace using a Service named redis.
----
+- Redis hostname redis assumes you're running Redis in the same Kubernetes namespace using a Service named redis.
 - Example: ConfigMap template  
+
 ```yaml
 apiVersion: v1
 kind: ConfigMap
@@ -20,14 +20,15 @@ data:
    envFrom:
         - configMapRef:
             name: flask-app-config
----
+```
 ###  Different Namespace
 
 - If your Flask app and Redis are in different Kubernetes namespaces, then the hostname redis (used in your app) won’t resolve automatically. You need to explicitly reference Redis’s fully qualified domain name (FQDN)
  <service-name>.<namespace>.svc.cluster.local
  eg:  redis.redis-namespace.svc.cluster.local
 
----
+
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,7 +37,7 @@ metadata:
 data:
   REDIS_HOST: redis.redis-namespace.svc.cluster.local
   REDIS_PORT: "6379"
----
+```
 
 ##  Network Policies
 
