@@ -1,4 +1,6 @@
 ## Infrastructure used to provision ebs volume for Redis pod
+- Redis is a staefull application, need persistent volume.
+
 ### 1. StorageClass
 - In Kubernetes, a StorageClass is a way to define how storage is provisioned dynamically. It acts like a blueprint for storage, describing what type of storage you want, and how it should be created.
 
