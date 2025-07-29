@@ -1,5 +1,5 @@
 ## Use command to create k8 secrets as per your requirements
-
+- K8 Secrets are used to store sensitive data.
 ###  To  Configure Docker Registry Secrets
 
 1. Create Secret
