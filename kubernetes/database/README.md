@@ -1,4 +1,4 @@
-##Database infrastructure consist of the following Kubernetes resources
+## Database infrastructure consist of the following Kubernetes resources
 1. StatefulSet
 2. Service
 
