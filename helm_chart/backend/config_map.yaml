@@ -4,5 +4,5 @@ metadata:
   name: flask-app-config
   namespace: backend-ns
 data:
-  REDIS_HOST: database-service.database-ns.svc.cluster.local
+  REDIS_HOST: backend-service.backend-ns.svc.cluster.local
   REDIS_PORT: "6379"

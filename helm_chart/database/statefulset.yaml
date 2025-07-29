@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: statefulset-redis
-  namespace: database-ns
+  namespace: backend-ns
 spec:
   selector:
     matchLabels:
-      app: database # has to match .spec.template.metadata.labels
+      app: backend # has to match .spec.template.metadata.labels
   serviceName: "redis"
   replicas: 1 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
     metadata:
       labels:
-        app: database # has to match .spec.selector.matchLabels
+        app: backend # has to match .spec.selector.matchLabels
     spec:
       nodeSelector:
-        nodegroup: database
+        nodegroup: backend
       terminationGracePeriodSeconds: 10
       containers:
       - name: redis

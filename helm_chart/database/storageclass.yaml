@@ -18,4 +18,3 @@ allowedTopologies:
     - us-east-1c #node must be in the same AZ
     - us-east-1f
     - us-east-1a
-    - us-east-1d

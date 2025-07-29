@@ -1,5 +1,3 @@
-from flask import Flask, jsonify, request
-import redis
 import time
 from flask_cors import CORS
 

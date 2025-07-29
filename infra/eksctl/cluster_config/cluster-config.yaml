@@ -2,7 +2,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: eks-cluster
+  name: my-eks
   region: us-east-1
 
 managedNodeGroups:
@@ -27,3 +27,11 @@ managedNodeGroups:
     labels:
       nodegroup: backend
 
+  - name: ng-database
+    instanceType: t3.medium
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 2
+    volumeSize: 20
+    labels:
+      nodegroup: database

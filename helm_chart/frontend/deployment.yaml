@@ -17,14 +17,16 @@ spec:
     spec:
       nodeSelector: #The nodeSelector forces Pods to be scheduled only on nodes with the label nodegroup=frontend. Useful for grouping Pods on specific hardware or zones.
         nodegroup: frontend
+      imagePullSecrets:
+       - name: regcred
       containers:
         - name: frontend #Defines the container inside the Pod.
-          image: nginx #Specifies the container image to use
+          image: sunilgadhe/my-apps:flask-k8-v2 #Specifies the container image to use
           ports:
-            - containerPort: 80 #Exposes port 80 inside the container. This tells Kubernetes which port the container listens on.
+            - containerPort: 5000 #Exposes port 80 inside the container. This tells Kubernetes which port the container listens on.
           envFrom:
             - configMapRef:
-                name: nginx-app-config 
+                name: flask-app-config
           resources:
             requests:
               cpu: "100m" #requests define the minimum CPU guaranteed (100 milliCPU).

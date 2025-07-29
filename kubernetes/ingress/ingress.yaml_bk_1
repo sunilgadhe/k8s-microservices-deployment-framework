@@ -22,4 +22,4 @@ spec:
   tls:
     - hosts:
         - flask.sunilcloud.online
-      secretName: my-tls-secret #Reference to the Secret you created
+      secretName: my-tls-secret	#Reference to the Secret you created

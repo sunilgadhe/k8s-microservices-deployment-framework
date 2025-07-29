@@ -1,11 +1,3 @@
-
-
-- Cross namespace DNS( <service-name>.<namespace>.svc.cluster.local
-) works only within cluster
-- We are running JavaScript in browser, it runs outside the cluster, in the user's web browser, so it cannot resole cluster-local DNS
-- Bowser can access api using ingress, LoadBalancer, Nginx Proxy internally.
-
-
 ***********************************************************
 			Same Namespace
 ***********************************************************
