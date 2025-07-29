@@ -42,5 +42,5 @@ curl -v http://k8s-frontend-frontend-1573becf73-eea17db1c18b5f61.elb.us-east-1.a
 
 
 ### Redis connectivity from inside front end pod
-nslookup backend-service.backend-ns.svc.cluster.local
+- nslookup backend-service.backend-ns.svc.cluster.local
 
