@@ -7,6 +7,7 @@
 Redis hostname redis assumes you're running Redis in the same Kubernetes namespace using a Service named redis.
 ---
 - Example: ConfigMap template  
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
