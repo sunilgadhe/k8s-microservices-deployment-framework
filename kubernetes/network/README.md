@@ -15,8 +15,10 @@ metadata:
 data:
   REDIS_HOST: redis    #redis is a service name
   REDIS_PORT: "6379"
+```
 
 - Update deployment file, container block.
+```yaml
    envFrom:
         - configMapRef:
             name: flask-app-config
