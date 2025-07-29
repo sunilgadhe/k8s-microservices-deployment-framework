@@ -20,7 +20,7 @@
 3. EC2 instance to access EKS cluster
 
 ### Implementation steps:
-#### 1
+#### 1. Add stable repo
 -  We need to add the Helm Stable Charts for your local client. Execute the below command:
 helm repo add stable https://charts.helm.sh/stable
 
@@ -33,23 +33,23 @@ kubectl create namespace prometheus
 
 #### 4. Install kube-prometheus-stack
 1. Below is helm command to install kube-prometheus-stack. The helm repo kube-stack-prometheus (formerly prometheus-operator) comes with a grafana deployment embedded.
-helm install stable prometheus-community/kube-prometheus-stack -n prometheus
+- helm install stable prometheus-community/kube-prometheus-stack -n prometheus
 
 2. Lets check if prometheus and grafana pods are running already
-kubectl get pods -n prometheus
-kubectl get svc -n prometheus
+- kubectl get pods -n prometheus
+- kubectl get svc -n prometheus
 
 
 3. In order to make prometheus and grafana available outside the cluster, edit prometheus and grafana service & use LoadBalancer or NodePort instead of ClusterIP.
-kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus
-kubectl edit svc stable-grafana -n prometheus
+- kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus
+- kubectl edit svc stable-grafana -n prometheus
 
 4. Verify if service is changed to LoadBalancer and also to get the Load Balancer URL.
-kubectl get svc -n prometheus
+- kubectl get svc -n prometheus
 
 5. Access Grafana UI in the browser using LB DNS or custom DNS
-UserName: admin
-Password: prom-operator
+- UserName: admin
+- Password: prom-operator
 
 6. Create Dashboard in Grafana
 Import grafana dashboard as per your requirement (ID: 18283) & select prometheus data source
