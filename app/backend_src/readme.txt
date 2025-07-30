@@ -1,4 +1,4 @@
-Cross-Namespace Communication
+# Cross-Namespace Communication
 
 - Use fully qualified domain names (FQDN) to communicate across namespaces.
 - Example:
