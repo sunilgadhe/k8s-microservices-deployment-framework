@@ -19,7 +19,7 @@ spec:
         nodegroup: frontend
       containers:
         - name: frontend #Defines the container inside the Pod.
-          image: nginx #Specifies the container image to use
+          image: sunilgadhe/nginx:latest #Specifies the container image to use
           ports:
             - containerPort: 80 #Exposes port 80 inside the container. This tells Kubernetes which port the container listens on.
           envFrom:

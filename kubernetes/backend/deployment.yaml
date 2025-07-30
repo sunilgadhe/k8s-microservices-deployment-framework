@@ -21,7 +21,7 @@ spec:
        - name: regcred
       containers:
         - name: backend #Defines the container inside the Pod.
-          image: sunilgadhe/my-apps:flask-k8-v2 #Specifies the container image to use
+          image: sunilgadhe/app-logic:latest #Specifies the container image to use
           ports:
             - containerPort: 5000 #Exposes port 80 inside the container. This tells Kubernetes which port the container listens on.
           envFrom:
