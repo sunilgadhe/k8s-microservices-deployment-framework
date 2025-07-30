@@ -1,0 +1,35 @@
+name: Build and Push Docker Image - app-logic
+
+on:
+  push:
+    branches:
+      - main  # Or your preferred branch
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Step to Set up Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Step to Log in to Docker Hub
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Step to Build and Push Docker Image
+    - name: Build and Push Image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./app/backend_src  # Path to code directory for the Docker build context
+        file: ./app/backend_src/Dockerfile  # Path to Dockerfile
+        push: true  # Push image to Docker Hub
+        tags: sunilgadhe/app-logic:latest  # Docker image tag
+
